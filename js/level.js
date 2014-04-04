@@ -1,12 +1,12 @@
 define(["jam", "../js/proto"], function(jam, proto) {
   // Tile size;
-  var s = 48;
+  var s = 44;
   var ps = 100;
 
   var pipe = function(x, y, l){
 	var p = jam.Sprite.call(this, x, y);
     var sprite = new proto.rect(s, s * l, 255, 0, 0).toDataURL();
-    this.setImage(sprite, s, s);
+    this.setImage(sprite, s, s * l);
   }
 
   pipe.prototype = new jam.Sprite(0, 0);
@@ -49,12 +49,20 @@ define(["jam", "../js/proto"], function(jam, proto) {
   level.prototype.gen_pipe = function(){
     console.log("Generating a pipe pair.");
     var d = Math.floor(Math.random()*7) - 3;
+    var g = this.curr.g + d;
+    if (g <= 0){
+      g = 1;
+    } else if (g >= 9) {
+      g = 8;
+    }
+
     var n = {
       x: this.curr.x + (s * 3),
-      g: this.curr.g + d
+      g: g
     };
-    var top = new pipe(n.x, 0, n.g);
-    var bot = new pipe(n.x, s * (n.g + 3), 10 - (n.g + 3));
+
+    var top = new pipe(n.x, 20, n.g);
+    var bot = new pipe(n.x, (s * (n.g + 3)) + 20, 10 - (n.g + 3));
 
     this.s.add(top);
     this.s.add(bot);

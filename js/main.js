@@ -35,7 +35,7 @@ require(["jam", "../lib/sylvester", "../js/proto", "../js/player", "../js/level"
 
       if (g.started){
         g.tdt += dt;
-        if (l.curr.x <= (p.x + 32)){
+        if (l.curr.x <= (p.x + 320)){
           l.gen_pipe();
         }
       } else {
@@ -45,7 +45,7 @@ require(["jam", "../lib/sylvester", "../js/proto", "../js/player", "../js/level"
 	      p.acceleration.y = 250;
 
           l.curr = {
-            x: Math.floor(p.x + 350),
+            x: Math.floor(p.x + 280),
             g: 5
           };
 
