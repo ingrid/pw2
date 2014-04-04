@@ -2,7 +2,6 @@ define(["jam", "../js/proto"], function(jam, proto) {
   // Tile size;
   var s = 48;
   var ps = 100;
-  var pipes = [];
 
   var pipe = function(x, y, l){
 	var p = jam.Sprite.call(this, x, y);
@@ -13,7 +12,7 @@ define(["jam", "../js/proto"], function(jam, proto) {
   pipe.prototype = new jam.Sprite(0, 0);
 
   var level = function(g, p){
-    this.obs = [];
+    this.pipes = [];
     this.g = g;
     this.curr = {
       x: 0,
@@ -38,6 +37,8 @@ define(["jam", "../js/proto"], function(jam, proto) {
 
     scene.add(this.ciel);
 
+    this.s = scene;
+
     this.g.on("update", function(dt) {
       var nx = p.x - 320 - 20;
       grass.x = nx;
@@ -46,13 +47,22 @@ define(["jam", "../js/proto"], function(jam, proto) {
   };
 
   level.prototype.gen_pipe = function(){
+    console.log("Generating a pipe pair.");
     var d = Math.floor(Math.random()*7) - 3;
     var n = {
-      x: this.curr.x + g,
+      x: this.curr.x + (s * 3),
       g: this.curr.g + d
     };
     var top = new pipe(n.x, 0, n.g);
-    var top = new pipe(n.x, s * (n.g + 3), 10 - (n.g + 3));
+    var bot = new pipe(n.x, s * (n.g + 3), 10 - (n.g + 3));
+
+    this.s.add(top);
+    this.s.add(bot);
+
+    this.pipes.push(top);
+    this.pipes.push(bot);
+
+    this.curr = n;
   };
 
   return level;

@@ -35,11 +35,20 @@ require(["jam", "../lib/sylvester", "../js/proto", "../js/player", "../js/level"
 
       if (g.started){
         g.tdt += dt;
+        if (l.curr.x <= (p.x + 32)){
+          l.gen_pipe();
+        }
       } else {
 		if(jam.Input.justPressed("UP") || jam.Input.justPressed("SPACE")) {
           g.started = true;
           g.score.visible = true;
 	      p.acceleration.y = 250;
+
+          l.curr = {
+            x: Math.floor(p.x + 350),
+            g: 5
+          };
+
         } else {
           // Fly bird in a sine wave.
           // Around 240.
