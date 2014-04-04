@@ -48,12 +48,18 @@ define(["jam", "../js/proto"], function(jam, proto) {
 
   level.prototype.gen_pipe = function(){
     console.log("Generating a pipe pair.");
-    var d = Math.floor(Math.random()*7) - 3;
+    // var d = Math.floor(Math.random()*7) - 3;
+    var d = Math.floor(Math.random()*3) + 1;
+
+    if (Math.random() > 0.5){
+      d = -d;
+    }
+
     var g = this.curr.g + d;
     if (g <= 0){
       g = 1;
-    } else if (g >= 9) {
-      g = 8;
+    } else if (g >= 7) {
+      g = 6;
     }
 
     var n = {

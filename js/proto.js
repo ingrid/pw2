@@ -35,15 +35,23 @@ define(["jam"], function(jam) {
     this.text = txt || "";
     this.font = "";
     this.color = ""
+    this.alpha = 1.0;
 
     this.render = function(context, camera){
 	  if(!this.visible) { return; }
+
+      context.save();
+
+	  if(this.alpha !== 1.0){ context.globalAlpha = this.alpha; }
+
       context.font = this.font;
       context.fillStyle = this.color;
 
       context.fillText(this.text,
                        this.x,
                        this.y);
+
+	context.restore();
     };
   };
 
